@@ -108,61 +108,26 @@ public class ChatScreen extends AppCompatActivity {
                         .whereEqualTo("reciever", reciever)
                         .orderBy("date", Query.Direction.ASCENDING);
 
-        Query query1 = firestore1.collection("Messages")
-                        .whereEqualTo("sender", reciever)
-                        .whereEqualTo("reciever", sender)
-                        .orderBy("date", Query.Direction.ASCENDING);
-
-
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(error != null){
-                    Toast.makeText(ChatScreen.this,error.getLocalizedMessage(),Toast.LENGTH_LONG).show();
-                }
+                if(value != null)
+                    Toast.makeText(ChatScreen.this, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 if(value != null){
-                    FirstModelArrayList.clear();
-                    MessageModelArrayList.clear();
-                    messagesAdapter.notifyDataSetChanged();
-                    for(DocumentSnapshot document: value.getDocuments()){
-                        Map<String, Object> messageData = document.getData();
-                        String sender = (String) messageData.get("sender");
-                        String reciever = (String) messageData.get("reciever");
-                        String message = (String) messageData.get("message");
+                    for(DocumentSnapshot document : value.getDocuments()) {
+                        Map<String, Object> data = document.getData();
 
-                        MessageModel messageModel = new MessageModel(sender,reciever,message);
-                        FirstModelArrayList.add(messageModel);
+                        String getsender = (String) data.get("sender");
+                        String getreciever = (String) data.get("reciever");
+                        String getmessage = (String) data.get("message");
+
+                        MessageModel messageModel = new MessageModel(getsender, getreciever, getmessage);
+                        MessageModelArrayList.add(messageModel);
                     }
-                    MessageModelArrayList.addAll(FirstModelArrayList);
-                    MessageModelArrayList.addAll(SecondModelArrayList);
                     messagesAdapter.notifyDataSetChanged();
                 }
             }
         });
 
-        query1.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(error != null){
-                    Toast.makeText(ChatScreen.this,error.getLocalizedMessage(),Toast.LENGTH_LONG).show();
-                }
-                if(value != null){
-                    SecondModelArrayList.clear();
-                    MessageModelArrayList.clear();
-                    messagesAdapter.notifyDataSetChanged();
-                    for(DocumentSnapshot document: value.getDocuments()){
-                        Map<String, Object> messageData = document.getData();
-                        String sender = (String) messageData.get("sender");
-                        String reciever = (String) messageData.get("reciever");
-                        String message = (String) messageData.get("message");
-                        MessageModel messageModel = new MessageModel(sender,reciever,message);
-                        SecondModelArrayList.add(messageModel);
-                    }
-                    MessageModelArrayList.addAll(FirstModelArrayList);
-                    MessageModelArrayList.addAll(SecondModelArrayList);
-                    messagesAdapter.notifyDataSetChanged();
-                }
-            }
-        });
     }
 }
