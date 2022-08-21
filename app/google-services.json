@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "938009690597",
+    "project_id": "chatappjava-c0c77",
+    "storage_bucket": "chatappjava-c0c77.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938009690597:android:3c22bf7e8b97ea957fef0c",
+        "android_client_info": {
+          "package_name": "com.ademozalp.chatappjava"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "938009690597-oc86mrt5njt1e7a65cmdc1npsuoi320m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTgtRP8Y7P6zqT-VGFEsDRZTiEvv65gTs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "938009690597-oc86mrt5njt1e7a65cmdc1npsuoi320m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

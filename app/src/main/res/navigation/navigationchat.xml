@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigationchat"
+    app:startDestination="@id/oldChatFragment">
+
+    <fragment
+        android:id="@+id/oldChatFragment"
+        android:name="com.ademozalp.chatappjava.view.oldChatFragment"
+        android:label="fragment_old_chat"
+        tools:layout="@layout/fragment_old_chat" >
+        <action
+            android:id="@+id/action_oldChatFragment_to_usersFragment"
+            app:destination="@id/usersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/usersFragment"
+        android:name="com.ademozalp.chatappjava.view.usersFragment"
+        android:label="fragment_users"
+        tools:layout="@layout/fragment_users" />
+</navigation>
