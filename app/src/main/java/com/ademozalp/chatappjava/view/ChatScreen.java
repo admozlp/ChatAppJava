@@ -92,13 +92,6 @@ public class ChatScreen extends AppCompatActivity {
             }
         });
     }
-    /*
-
-         firestore1.collection("Messages")
-                .whereIn("sender", Arrays.asList(sender, reciever))
-                .whereIn("reciever", Arrays.asList(sender, reciever))
-                .orderBy("date", Query.Direction.ASCENDING);
-     */
 
     private void getData(){
         FirebaseFirestore firestore1 = FirebaseFirestore.getInstance();
@@ -111,9 +104,11 @@ public class ChatScreen extends AppCompatActivity {
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(value != null)
+                if(error != null){
                     Toast.makeText(ChatScreen.this, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                }
                 if(value != null){
+
                     for(DocumentSnapshot document : value.getDocuments()) {
                         Map<String, Object> data = document.getData();
 
