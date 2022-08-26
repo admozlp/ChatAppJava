@@ -97,8 +97,7 @@ public class ChatScreen extends AppCompatActivity {
         FirebaseFirestore firestore1 = FirebaseFirestore.getInstance();
 
         Query query = firestore1.collection("Messages")
-                        .whereEqualTo("sender", sender)
-                        .whereEqualTo("reciever", reciever)
+                        .whereIn("sender", Arrays.asList(sender, reciever))
                         .orderBy("date", Query.Direction.ASCENDING);
 
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -108,16 +107,25 @@ public class ChatScreen extends AppCompatActivity {
                     Toast.makeText(ChatScreen.this, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 }
                 if(value != null){
-
+                    MessageModelArrayList.clear();
+                    messagesAdapter.notifyDataSetChanged();
                     for(DocumentSnapshot document : value.getDocuments()) {
                         Map<String, Object> data = document.getData();
 
                         String getsender = (String) data.get("sender");
                         String getreciever = (String) data.get("reciever");
                         String getmessage = (String) data.get("message");
-
                         MessageModel messageModel = new MessageModel(getsender, getreciever, getmessage);
-                        MessageModelArrayList.add(messageModel);
+                        if(getsender.equals(sender)){
+                            if(getreciever.equals(reciever)){
+                                MessageModelArrayList.add(messageModel);
+                            }
+                        }
+                        else if(getsender.equals(reciever)){
+                            if(getreciever.equals(sender)){
+                                MessageModelArrayList.add(messageModel);
+                            }
+                        }
                     }
                     messagesAdapter.notifyDataSetChanged();
                 }
