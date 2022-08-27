@@ -64,7 +64,6 @@ public class oldChatFragment extends Fragment {
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         Query query = firestore.collection("Messages")
-                        .whereEqualTo("sender",sender)
                                 .orderBy("date", Query.Direction.DESCENDING);
 
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -77,12 +76,16 @@ public class oldChatFragment extends Fragment {
                     for(DocumentSnapshot document : value.getDocuments()){
                         Map<String, Object> messageEmail = document.getData();
 
-                        String reciever = (String) messageEmail.get("reciever");
-                        OldChatModel oldchat = new OldChatModel(reciever);
+                        String getreciever = (String) messageEmail.get("reciever");
+                        String getsender = (String) messageEmail.get("sender");
 
-                        if (!userEmailArrayList.contains(reciever)){
-                            oldChatModelArrayList.add(oldchat);
-                            userEmailArrayList.add(reciever);
+
+                        if(getsender.equals(sender) || getreciever.equals(sender)){
+                            OldChatModel oldchat = new OldChatModel(getreciever);
+                            if (!userEmailArrayList.contains(getreciever)){
+                                oldChatModelArrayList.add(oldchat);
+                                userEmailArrayList.add(getreciever);
+                            }
                         }
                     }
                     oldChatAdapter.notifyDataSetChanged();

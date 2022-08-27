@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     String email;
     String password;
+    String username;
     FirebaseFirestore firestore;
     SharedPreferences sharedPreferences;
 
@@ -72,8 +73,9 @@ public class MainActivity extends AppCompatActivity {
     public void signUp(View view){
         email = binding.email.getText().toString();
         password = binding.passwordtxt.getText().toString();
+        username = binding.username.getText().toString();
 
-        if(email.matches("") || password.matches("")){
+        if(email.matches("") || password.matches("") || username.matches("")){
             Toast.makeText(this,"Please Fill the fields",Toast.LENGTH_LONG).show();
         }
         else{
@@ -81,14 +83,12 @@ public class MainActivity extends AppCompatActivity {
 
             userData.put("username", email);
             userData.put("password", password);
-            /*int myid = sharedPreferences.getInt("myid",1);
-            userData.put("myid", myid);
-            sharedPreferences.edit().putInt("myid", myid +1).commit();*/
+            userData.put("kuladi",username);
 
             firestore.collection("MyUsers").add(userData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
-                    System.out.println("MyUsers tablosuna kullanıcı başarıyla eklendi");
+                    //System.out.println("MyUsers tablosuna kullanıcı başarıyla eklendi");
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

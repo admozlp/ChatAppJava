@@ -28,8 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 public class usersFragment extends Fragment {
-    FirebaseAuth auth;
-    FirebaseUser firebaseUser;
+    //FirebaseAuth auth;
+    //FirebaseUser firebaseUser;
     FirebaseFirestore firestore;
     ArrayList<usersModel> UsersArrayList;
     private FragmentUsersBinding binding;
@@ -72,8 +72,7 @@ public class usersFragment extends Fragment {
                 if(value != null){
                     for(DocumentSnapshot document : value.getDocuments()){
                         Map<String, Object> data = document.getData();
-                        String email = (String) data.get("username");
-
+                        String email = (String) data.get("kuladi");
                         usersModel user = new usersModel(email);
                         UsersArrayList.add(user);
                     }

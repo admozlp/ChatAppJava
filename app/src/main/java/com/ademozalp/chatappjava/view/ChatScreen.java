@@ -97,7 +97,6 @@ public class ChatScreen extends AppCompatActivity {
         FirebaseFirestore firestore1 = FirebaseFirestore.getInstance();
 
         Query query = firestore1.collection("Messages")
-                        .whereIn("sender", Arrays.asList(sender, reciever))
                         .orderBy("date", Query.Direction.ASCENDING);
 
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
