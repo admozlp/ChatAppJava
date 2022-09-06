@@ -12,14 +12,16 @@
         <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/drawable/ic_email_focused.xml" value="0.1325" />
         <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/drawable/ic_launcher_background.xml" value="0.125" />
         <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/drawable/ic_lock.xml" value="0.158" />
+        <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/drawable/ic_send.xml" value="0.169" />
+        <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/drawable/message.xml" value="0.169" />
         <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/font/fonts.xml" value="0.1" />
-        <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/layout/activity_chat_screen.xml" value="0.2" />
+        <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/layout/activity_chat_screen.xml" value="0.15" />
         <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/layout/activity_chats.xml" value="0.2" />
         <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/layout/fragment_old_chat.xml" value="0.2" />
         <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/layout/fragment_users.xml" value="0.1480978260869565" />
         <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/layout/oldchatrecyclerrow.xml" value="0.2" />
-        <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/layout/recyclerrowmessage.xml" value="0.1641025641025641" />
+        <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/layout/recyclerrowmessage.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/layout/recyclerrowuser.xml" value="0.2" />
         <entry key="..\:/Users/Adem/AndroidStudioProjects/ChatAppJava/app/src/main/res/menu/wpmenu.xml" value="0.2" />
       </map>

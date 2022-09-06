@@ -72,8 +72,9 @@ public class usersFragment extends Fragment {
                 if(value != null){
                     for(DocumentSnapshot document : value.getDocuments()){
                         Map<String, Object> data = document.getData();
-                        String email = (String) data.get("kuladi");
-                        usersModel user = new usersModel(email);
+                        String email = (String) data.get("username");
+                        String kuladi = (String) data.get("kuladi");
+                        usersModel user = new usersModel(email,kuladi);
                         UsersArrayList.add(user);
                     }
                     usersAdapter.notifyDataSetChanged();

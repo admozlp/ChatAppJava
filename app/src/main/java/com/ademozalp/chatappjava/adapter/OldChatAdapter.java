@@ -30,15 +30,15 @@ public class OldChatAdapter extends RecyclerView.Adapter<OldChatAdapter.OldChatV
 
     @Override
     public void onBindViewHolder(@NonNull OldChatViewHolder holder, int position) {
-        holder.binding.oldchatrow.setText(oldChatModelArrayList.get(position).reciever);
+        holder.binding.oldchatrow.setText(oldChatModelArrayList.get(position).kuladi);
 
         holder.binding.oldchatrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(holder.itemView.getContext(), ChatScreen.class);
                 intent.putExtra("recieverEmail",oldChatModelArrayList.get(position).reciever);
+                intent.putExtra("recieverKuladi",oldChatModelArrayList.get(position).kuladi);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                //CreateNewChat(modelArrayList.get(position));
                 holder.itemView.getContext().startActivity(intent);
             }
         });

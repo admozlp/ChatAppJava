@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     String email;
     String password;
-    String username;
+    String usnam;
     FirebaseFirestore firestore;
     SharedPreferences sharedPreferences;
 
@@ -73,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
     public void signUp(View view){
         email = binding.email.getText().toString();
         password = binding.passwordtxt.getText().toString();
-        username = binding.username.getText().toString();
+        usnam = binding.username.getText().toString();
 
-        if(email.matches("") || password.matches("") || username.matches("")){
+        if(email.matches("") || password.matches("") || usnam.matches("")){
             Toast.makeText(this,"Please Fill the fields",Toast.LENGTH_LONG).show();
         }
         else{
@@ -83,17 +83,19 @@ public class MainActivity extends AppCompatActivity {
 
             userData.put("username", email);
             userData.put("password", password);
-            userData.put("kuladi",username);
+            userData.put("kuladi",usnam);
+
 
             firestore.collection("MyUsers").add(userData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
-                    //System.out.println("MyUsers tablosuna kullanıcı başarıyla eklendi");
+                    System.out.println("MyUsers tablosuna kullanıcı başarıyla eklendi");
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(MainActivity.this, "Kayıtlat MyUsers Tablosuna Eklenemedi", Toast.LENGTH_LONG);
+                    System.out.println("eklenmedi");
+                    Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 }
             });
 

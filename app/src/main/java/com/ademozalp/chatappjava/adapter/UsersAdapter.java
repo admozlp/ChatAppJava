@@ -34,7 +34,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersHolder>
 
     @Override
     public void onBindViewHolder(@NonNull UsersHolder holder, int position) {
-        holder.recyclerrowuserBinding.usersText.setText(modelArrayList.get(position).email);
+        holder.recyclerrowuserBinding.usersText.setText(modelArrayList.get(position).kuladi);
 
         holder.recyclerrowuserBinding.usersText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,8 +42,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersHolder>
                 // action ile gitmeli
                 Intent intent = new Intent(holder.itemView.getContext(), ChatScreen.class);
                 intent.putExtra("recieverEmail",modelArrayList.get(position).email);
+                intent.putExtra("recieverKuladi",modelArrayList.get(position).kuladi);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                //CreateNewChat(modelArrayList.get(position));
                 holder.itemView.getContext().startActivity(intent);
             }
         });
@@ -60,12 +60,5 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersHolder>
             super(recyclerrowuserBinding.getRoot());
             this.recyclerrowuserBinding = recyclerrowuserBinding;
         }
-    }
-
-
-    private void CreateNewChat(usersModel model){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        System.out.println("Kim :" + user.getEmail());
-        System.out.println("Kime :" + model.email);
     }
 }

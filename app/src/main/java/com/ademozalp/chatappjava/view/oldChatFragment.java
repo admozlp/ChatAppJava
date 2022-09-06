@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ public class oldChatFragment extends Fragment {
     private FragmentOldChatBinding binding;
     OldChatAdapter oldChatAdapter;
     ArrayList<String > userEmailArrayList;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     public oldChatFragment() {
@@ -45,20 +47,31 @@ public class oldChatFragment extends Fragment {
         super.onCreate(savedInstanceState);
         oldChatModelArrayList = new ArrayList<>();
         userEmailArrayList = new ArrayList<>();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentOldChatBinding.inflate(inflater, container, false);
+        swipeRefreshLayout = binding.swipeLayout;
         getUsers();
         binding.oldChatRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         oldChatAdapter = new OldChatAdapter(oldChatModelArrayList);
         binding.oldChatRecyclerView.setAdapter(oldChatAdapter);
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getUsers();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         return binding.getRoot();
     }
 
     public void getUsers(){
+
         FirebaseUser currentlyUser = FirebaseAuth.getInstance().getCurrentUser();
         String sender = currentlyUser.getEmail();
 
@@ -66,25 +79,35 @@ public class oldChatFragment extends Fragment {
         Query query = firestore.collection("Messages")
                                 .orderBy("date", Query.Direction.DESCENDING);
 
-        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firestore.collection("Messages").orderBy("date", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(error != null){
                     Toast.makeText(requireContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
                 else if (value != null){
+                    oldChatModelArrayList.clear();
+                    userEmailArrayList.clear();
+                    oldChatAdapter.notifyDataSetChanged();
                     for(DocumentSnapshot document : value.getDocuments()){
                         Map<String, Object> messageEmail = document.getData();
-
                         String getreciever = (String) messageEmail.get("reciever");
+                        String getrecievername = (String) messageEmail.get("recievername");
                         String getsender = (String) messageEmail.get("sender");
+                        String getsendername = (String) messageEmail.get("sendername");
 
-
-                        if(getsender.equals(sender) || getreciever.equals(sender)){
-                            OldChatModel oldchat = new OldChatModel(getreciever);
-                            if (!userEmailArrayList.contains(getreciever)){
+                        if(getsender.equals(sender)){
+                            OldChatModel oldchat = new OldChatModel(getreciever, getrecievername);
+                            if (!userEmailArrayList.contains(getrecievername)){
                                 oldChatModelArrayList.add(oldchat);
-                                userEmailArrayList.add(getreciever);
+                                userEmailArrayList.add(getrecievername);
+                            }
+                        }
+                        if( getreciever.equals(sender)){
+                            OldChatModel oldchat = new OldChatModel(getsender, getsendername);
+                            if (!userEmailArrayList.contains(getsendername)){
+                                oldChatModelArrayList.add(oldchat);
+                                userEmailArrayList.add(getsendername);
                             }
                         }
                     }
