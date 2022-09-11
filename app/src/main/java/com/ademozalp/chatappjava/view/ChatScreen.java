@@ -98,7 +98,7 @@ public class ChatScreen extends AppCompatActivity {
 
             newMessage.put("sender",sender);
             newMessage.put("sendername",sendername);
-            newMessage.put("message",message);
+            newMessage.put("message",message.trim());
             newMessage.put("reciever",reciever);
             newMessage.put("recievername",recievername);
             newMessage.put("date", FieldValue.serverTimestamp());

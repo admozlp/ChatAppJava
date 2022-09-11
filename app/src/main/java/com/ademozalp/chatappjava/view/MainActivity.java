@@ -81,9 +81,9 @@ public class MainActivity extends AppCompatActivity {
         else{
             HashMap<String, Object> userData = new HashMap<>();
 
-            userData.put("username", email);
-            userData.put("password", password);
-            userData.put("kuladi",usnam);
+            userData.put("username", email.trim());
+            userData.put("password", password.trim());
+            userData.put("kuladi",usnam.trim());
 
 
             firestore.collection("MyUsers").add(userData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
