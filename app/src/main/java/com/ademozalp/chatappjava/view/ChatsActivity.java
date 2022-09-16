@@ -36,15 +36,19 @@ public class ChatsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.new_chat){
-            NavDirections action = oldChatFragmentDirections.actionOldChatFragmentToUsersFragment();
-            Navigation.findNavController(this,R.id.fragmentContainer).navigate(action);
-        }
-        else if(item.getItemId() == R.id.logout){
-            auth.signOut();
-            Intent intent = new Intent(ChatsActivity.this,MainActivity.class);
-            startActivity(intent);
-            finish();
+        try {
+            if(item.getItemId() == R.id.new_chat){
+                NavDirections action = oldChatFragmentDirections.actionOldChatFragmentToUsersFragment();
+                Navigation.findNavController(this,R.id.fragmentContainer).navigate(action);
+            }
+            else if(item.getItemId() == R.id.logout){
+                auth.signOut();
+                Intent intent = new Intent(ChatsActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }catch (Exception e){
+            System.out.println(e.getLocalizedMessage());
         }
         return super.onOptionsItemSelected(item);
     }
