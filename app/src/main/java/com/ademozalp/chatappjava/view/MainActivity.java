@@ -85,24 +85,10 @@ public class MainActivity extends AppCompatActivity {
             userData.put("password", password.trim());
             userData.put("kuladi",usnam.trim());
 
-
-            firestore.collection("MyUsers").add(userData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                @Override
-                public void onSuccess(DocumentReference documentReference) {
-                    System.out.println("MyUsers tablosuna kullanıcı başarıyla eklendi");
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    System.out.println("eklenmedi");
-                    Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
-
-
             auth.createUserWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                 @Override
                 public void onSuccess(AuthResult authResult) {
+                    saveMyUsers(userData);
                     Intent intent = new Intent(MainActivity.this,ChatsActivity.class);
                     startActivity(intent);
                     finish();
@@ -115,5 +101,20 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }
+    }
+
+    private void saveMyUsers(HashMap<String, Object> userData){
+        firestore.collection("MyUsers").add(userData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                System.out.println("MyUsers tablosuna kullanıcı başarıyla eklendi");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println("eklenmedi");
+                Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
