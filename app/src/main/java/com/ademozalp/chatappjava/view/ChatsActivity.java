@@ -47,6 +47,11 @@ public class ChatsActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
+            else if(item.getItemId() == R.id.profile){
+                Intent intent = new Intent(ChatsActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                System.out.println("intent");
+            }
         }catch (Exception e){
             System.out.println(e.getLocalizedMessage());
         }

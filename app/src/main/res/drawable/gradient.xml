@@ -7,5 +7,4 @@
                 android:endColor="@color/purple_700"/>
         </shape>
     </item>
-
 </selector>
