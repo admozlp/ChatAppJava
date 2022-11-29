@@ -3,20 +3,26 @@ package com.ademozalp.chatappjava.view;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.ademozalp.chatappjava.R;
 import com.ademozalp.chatappjava.adapter.MessagesAdapter;
 import com.ademozalp.chatappjava.databinding.ActivityChatScreenBinding;
 import com.ademozalp.chatappjava.model.MessageModel;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -44,6 +50,8 @@ public class ChatScreen extends AppCompatActivity {
     MessagesAdapter messagesAdapter;
     ArrayList<MessageModel> SecondModelArrayList;
     ArrayList<MessageModel> FirstModelArrayList;
+    public static NotificationManagerCompat notificationManagerCompat;
+    public static Notification notification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +93,13 @@ public class ChatScreen extends AppCompatActivity {
                 binding.messagesRecyclerView.scrollToPosition(MessageModelArrayList.size() - 1);
             }
         });
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel("myCh","MyChannel", NotificationManager.IMPORTANCE_DEFAULT);
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
     }
 
     public void send(View view){
@@ -107,7 +122,6 @@ public class ChatScreen extends AppCompatActivity {
             firestore.collection("Messages").add(newMessage).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
-                    //oldChatFragment newm = new oldChatFragment();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -154,11 +168,24 @@ public class ChatScreen extends AppCompatActivity {
                             }
                         }
                     }
+                    int index = MessageModelArrayList.size() - 1;
+                    MessageModel model = MessageModelArrayList.get(index);
+
+                    if(model.reciever.equals(currentlyUser.getEmail())){
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(ChatScreen.this, "myCh")
+                                .setSmallIcon(R.drawable.iconwp)
+                                .setContentTitle(model.sender)
+                                .setContentText(model.message);
+
+                        notification = builder.build();
+                        notificationManagerCompat = NotificationManagerCompat.from(ChatScreen.this);
+                        notificationManagerCompat.notify(1, notification);
+                    }
+
                     messagesAdapter.notifyDataSetChanged();
                     binding.messagesRecyclerView.scrollToPosition(MessageModelArrayList.size()-1);
                 }
             }
         });
-
     }
 }

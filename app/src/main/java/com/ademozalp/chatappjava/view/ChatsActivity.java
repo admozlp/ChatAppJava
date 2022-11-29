@@ -45,7 +45,7 @@ public class ChatsActivity extends AppCompatActivity {
                 auth.signOut();
                 Intent intent = new Intent(ChatsActivity.this,MainActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
             else if(item.getItemId() == R.id.profile){
                 Intent intent = new Intent(ChatsActivity.this, ProfileActivity.class);
